@@ -4,8 +4,6 @@
 
 nsIClipboardHelper = Cc['@mozilla.org/widget/clipboardhelper;1']
   .getService(Ci.nsIClipboardHelper)
-nsIDomUtils = Cc['@mozilla.org/inspector/dom-utils;1']
-  .getService(Ci.inIDOMUtils)
 nsIEventListenerService = Cc['@mozilla.org/eventlistenerservice;1']
   .getService(Ci.nsIEventListenerService)
 nsIFocusManager = Cc['@mozilla.org/focus-manager;1']
@@ -493,13 +491,6 @@ setAttributes = (element, attributes) ->
     element.setAttribute(attribute, value)
   return
 
-setHover = (element, hover) ->
-  method = if hover then 'addPseudoClassLock' else 'removePseudoClassLock'
-  while element.parentElement
-    nsIDomUtils[method](element, ':hover')
-    element = element.parentElement
-  return
-
 walkTextNodes = (element, fn) ->
   for node in element.childNodes then switch node.nodeType
     when 3 # TextNode.
@@ -738,7 +729,6 @@ module.exports = {
   selectAllSubstringMatches
   selectElement
   setAttributes
-  setHover
   walkTextNodes
 
   Counter
